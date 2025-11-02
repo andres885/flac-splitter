@@ -24,3 +24,5 @@ Run script:
 ```bash
 flac_split <directory>
 ```
+
+![Captura del script](./screenshot.png)
