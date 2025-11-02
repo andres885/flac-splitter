@@ -12,13 +12,21 @@ Instalar dependencias:
 sudo apt install cuetools shntool flac
 ```
 
-Clonar repositorio:
+Descarga el script:
 ```bash
-git clone https://github.com/andres885/flac_split.git
+wget https://github.com/andres885/flac_split/raw/main/flac_split
+chmod +x flac_split
 ```
 Sustituir la ruta a tu biblioteca musical en el script:
 
-Cambia ```MUSIC_LIBRARY="/home/usuario/Música/Metal/$1"``` por ```MUSIC_LIBRARY="/ruta/a/tu/biblioteca/$1"```
+Cambia
+```bash
+MUSIC_LIBRARY="/home/usuario/Música/Metal/$1"
+```
+por
+```bash
+MUSIC_LIBRARY="/ruta/a/tu/biblioteca/$1"
+```
 
 Mover script a un directorio en el PATH:
 ```bash
