@@ -30,4 +30,5 @@ flac_split <directory>
 Replace <directory> with a directory from your music library.
 
 ![Captura del script](./screenshot.png)
+
 That's all, folks!
