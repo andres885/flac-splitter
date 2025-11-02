@@ -1,0 +1,53 @@
+#!/bin/bash
+
+MUSIC_LIBRARY="/home/usuario/Música/Metal/$1"
+
+find "$MUSIC_LIBRARY" -type f -name '*.cue' -print0 | while read -d $'\0' cuefile; do
+    dir="$(dirname "$cuefile")"
+    base="$(basename "$cuefile" .cue)"
+    cd "$dir" || exit
+
+    # Verificar si existe el archivo FLAC correspondiente
+    flacfile="${base}.flac"
+    if [ ! -f "$flacfile" ]; then
+        echo "Error: No se encontró el archivo FLAC para $cuefile"
+        continue
+    fi
+
+    # Verificar si ya existen archivos divididos
+    if ls *.flac 2>/dev/null | grep -q "^[0-9]_"; then
+        echo "Advertencia: Ya existen archivos FLAC divididos en $dir"
+        read -p "¿Quieres volver a dividirlos? (s/n): " confirm
+        if [[ "$confirm" != "s" ]]; then
+            continue
+        fi
+    fi
+
+    # Dividir el archivo FLAC usando shnsplit
+    shnsplit -f "$cuefile" -o flac "$flacfile" -t "%n_%t"
+
+    # Obtener metadatos del CUE
+    album=$(grep -a -m 1 '^TITLE' "$cuefile" | cut -d '"' -f 2)
+    date=$(grep -a -m 1 '^REM DATE' "$cuefile" | awk '{print $3}')
+    genre=$(grep -a -m 1 '^REM GENRE' "$cuefile" | cut -d '"' -f 2)
+    artist=$(grep -a -m 1 '^PERFORMER' "$cuefile" | cut -d '"' -f 2)
+
+    # Etiquetar archivos FLAC resultantes
+    for trackfile in *.flac; do
+        tracknum=$(echo "$trackfile" | cut -d '_' -f1)
+        title=$(echo "$trackfile" | cut -d '_' -f2- | sed 's/.flac$//')
+
+        metaflac --remove-all-tags "$trackfile"
+        metaflac --set-tag="TRACKNUMBER=$tracknum" "$trackfile"
+        metaflac --set-tag="ARTIST=$artist" "$trackfile"
+        metaflac --set-tag="TITLE=$title" "$trackfile"
+        metaflac --set-tag="ALBUM=$album" "$trackfile"
+        metaflac --set-tag="DATE=$date" "$trackfile"
+        metaflac --set-tag="GENRE=$genre" "$trackfile"
+    done
+
+    echo "Proceso completado para $flacfile"
+
+    # Eliminar el archivo original después de la verificación
+    echo "Revisar las pistas y eliminar el archivo original manualmente si todo está correcto."
+done
