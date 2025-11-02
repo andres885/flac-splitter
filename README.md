@@ -1,4 +1,4 @@
-# flac-splitter, a Bash Script to split FLAC files
+# Bash Script to split FLAC files
 
 Un script en Bash que divide archivos FLAC en pistas independientes utilizando una hoja CUE.
 
