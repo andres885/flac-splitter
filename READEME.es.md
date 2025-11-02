@@ -16,7 +16,7 @@ git clone https://github.com/andres885/flac_split.git
 
 Mover script a un directorio en el PATH:
 ```bash
-mv flac-splitter/flac_split ~/.local/bin/
+mv flac_split/flac_split ~/.local/bin/
 ```
 
 Ejecutar script:
