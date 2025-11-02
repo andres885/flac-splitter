@@ -1,5 +1,5 @@
 [English version](./README.md)
-# Bash Script para dividir archivos FLAC
+# Bash script para dividir archivos FLAC
 
 Un script en Bash que divide archivos FLAC en pistas independientes utilizando una hoja CUE.
 
