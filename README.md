@@ -1,5 +1,5 @@
 [Versión en español](./README.es.md)
-# Bash Script to split FLAC files
+# Bash script to split FLAC files
 
 A Bash script that splits FLAC files into individual tracks using a CUE sheet.
 
