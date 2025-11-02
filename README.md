@@ -18,9 +18,13 @@ chmod +x flac_split
 Replace the path to your music library in the script:
 
 Change
-```MUSIC_LIBRARY="/home/usuario/Música/Metal/$1"```
+```bash
+MUSIC_LIBRARY="/home/usuario/Música/Metal/$1"
+```
 to
-```MUSIC_LIBRARY="/path/to/your/library/$1"```
+```bash
+MUSIC_LIBRARY="/path/to/your/library/$1"
+```
 
 Move script to a directory in your PATH:
 ```bash
