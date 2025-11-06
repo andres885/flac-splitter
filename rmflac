@@ -1,0 +1,27 @@
+#!/bin/bash
+
+MUSIC_LIBRARY="/home/usuario/Música/Metal/$1"
+
+find "$MUSIC_LIBRARY" -type f -name '*.cue' -print0 | while read -d $'\0' cuefile; do
+    dir="$(dirname "$cuefile")"
+    base="$(basename "$cuefile" .cue)"
+    cd "$dir" || exit
+
+    flacfile="${base}.flac"
+    if [ -f "$flacfile" ]; then
+        divided_files=$(ls *.flac 2>/dev/null | grep -E "^[0-9]+_.*\.flac$")
+        if [ -n "$divided_files" ]; then
+            echo "Se encontraron pistas divididas en $dir:"
+            echo "$divided_files" > /dev/tty
+            read -p "¿Eliminar el archivo original $flacfile? (s/n): " confirm < /dev/tty
+            if [[ "$confirm" == "s" ]]; then
+                rm "$flacfile"
+                echo "Archivo eliminado: $flacfile"
+            else
+                echo "Archivo conservado: $flacfile"
+            fi
+        else
+            echo "No se encontraron pistas divididas en $dir. No se eliminará el archivo."
+        fi
+    fi
+done
